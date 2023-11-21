@@ -34,15 +34,21 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
       // フォルダーのトップにtemplate.<拡張子>があるかを確認
-      const isTemplateFile = await vscode.workspace.fs.stat(
-        vscode.Uri.joinPath(folderPath, "template.js")
+      const topFilesNames: string[] = await vscode.workspace.fs
+        .readDirectory(folderPath)
+        .then((files) => files.map((file) => file[0]));
+      console.log(topFilesNames);
+      const isTemplateFile = topFilesNames.find(
+        (fileName) => fileName.match(/^template\..+$/) !== null
       );
-      if (isTemplateFile.type !== vscode.FileType.File) {
+      if (!isTemplateFile) {
         vscode.window.showErrorMessage(
-          "template.jsがフォルダーのトップにありません"
+          "templateがフォルダーのトップにありません"
         );
         return;
       }
+      const extension =
+        isTemplateFile.split(".")[isTemplateFile.split(".").length - 1];
       await vscode.workspace.fs.createDirectory(
         vscode.Uri.joinPath(folderPath, contestName)
       );
@@ -52,8 +58,13 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.Uri.joinPath(folderPath, contestName, problem)
           );
           await vscode.workspace.fs.copy(
-            vscode.Uri.joinPath(folderPath, "template.js"),
-            vscode.Uri.joinPath(folderPath, contestName, problem, `main.js`)
+            vscode.Uri.joinPath(folderPath, "template." + extension),
+            vscode.Uri.joinPath(
+              folderPath,
+              contestName,
+              problem,
+              `main.${extension}`
+            )
           );
         })
       );
