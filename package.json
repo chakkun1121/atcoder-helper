@@ -1,7 +1,6 @@
 {
   "name": "atcoder-helper",
   "displayName": "atcoder helper",
-  "description": "",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.84.0"
@@ -10,13 +9,18 @@
     "Other"
   ],
   "activationEvents": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chakkun1121/atcoder-helper.git"
+  },
   "main": "./dist/extension.js",
+  "publisher": "chakkun1121",
   "contributes": {
     "commands": [
       {
         "command": "atcoder-helper.setup",
         "category": "AtCoder Helper",
-        "title": "フォルダーをセットアップします / setup"
+        "title": "setup folder"
       }
     ]
   },
