@@ -71,6 +71,23 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window.showInformationMessage("コンテストフォルダを作成しました");
     })
   );
+  context.subscriptions.push(
+    vscode.commands.registerCommand("atcoder-helper.view", async () => {
+      const contestName = await vscode.window.showInputBox({
+        title: "コンテスト名",
+        placeHolder: "abc001",
+      });
+      const showURL = contestName
+        ? `https://atcoder.jp/contests/${contestName}`
+        : "https://atcoder.jp/contests";
+      const panel = vscode.window.createWebviewPanel(
+        "atcoder",
+        "atcoder",
+        vscode.ViewColumn.Two
+      );
+      panel.webview.html = `<iframe src="${showURL}" frameborder="0" style="width: 100%; height: 100%;"></iframe>`;
+    })
+  );
 }
 
 // このメソッドは、拡張機能が非アクティブ化されたときに呼び出されます

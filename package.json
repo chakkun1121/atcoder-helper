@@ -21,6 +21,11 @@
         "command": "atcoder-helper.setup",
         "category": "AtCoder Helper",
         "title": "setup folder"
+      },
+      {
+        "command": "atcoder-helper.view",
+        "category": "AtCoder Helper",
+        "title": "atcoderをエディター部分に表示します"
       }
     ]
   },
